@@ -23,26 +23,30 @@ struct PlayMode : Mode {
 	struct Button {
 		uint8_t downs = 0;
 		uint8_t pressed = 0;
-	} left, right, down, up;
+	} left, right, down, up, space;
 
 	//local copy of the game scene (so code can change it during gameplay):
 	Scene scene;
 
-	//hexapod leg to wobble:
-	Scene::Transform *hip = nullptr;
-	Scene::Transform *upper_leg = nullptr;
-	Scene::Transform *lower_leg = nullptr;
-	glm::quat hip_base_rotation;
-	glm::quat upper_leg_base_rotation;
-	glm::quat lower_leg_base_rotation;
-	float wobble = 0.0f;
-
-	glm::vec3 get_leg_tip_position();
-
-	//music coming from the tip of the leg (as a demonstration):
-	std::shared_ptr< Sound::PlayingSample > leg_tip_loop;
+	//background ocean wave sound
+	std::shared_ptr< Sound::PlayingSample > ocean_wave_sound;
 	
 	//camera:
 	Scene::Camera *camera = nullptr;
 
+	//dolphin whistle
+	bool is_whistling = false;
+
+	//dolphin move
+	Scene::Transform *dolphin = nullptr;
+	float BOUNDARY = 160.0f;
+	glm::vec3 dolphin_rotation_euler;
+	float rotation_speed = 50.0f;
+	float move_speed = 10.0f;
+
+	//chest
+	Scene::Transform *chest = nullptr;
+	float angle_range = float(M_PI) / 3.0f;
+	float found_distance = 5.0f;
+	bool is_chest_found = false;
 };
